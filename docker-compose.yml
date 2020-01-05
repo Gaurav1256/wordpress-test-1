@@ -1,0 +1,29 @@
+version: '2'
+services:
+  web:
+    build: web
+    ports:
+      - "80:80"
+    tty: true
+    restart: always
+    networks:
+        - main
+    volumes:
+      - ./web/htdocs:/var/www/html
+  mysql:
+    build: mysql
+    restart: always
+    networks:
+        - main
+    volumes:
+      - ./mysql/db:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: latest
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: wordpress
+networks:
+    main:
+        driver: bridge
